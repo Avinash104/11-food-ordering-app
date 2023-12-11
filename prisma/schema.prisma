@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  type           Role      @default(USER)
+  image          String?
+  hashedPassword String?
+  phone          String?
+  streetAddress  String?
+  postalCode     String?
+  city           String?
+  country        String?
+  favorites      String[]  @db.ObjectId
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  accounts Account[]
+  orders   Order[]
+}
+
+enum Role {
+  USER
+  AGENT
+  ADMIN
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Category {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  imageSrc    String
+
+  menuItems MenuItem[]
+}
+
+model MenuItem {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  imageSrc    String
+  basePrice   Int
+  sizes       String
+
+  category Category @relation(fields: [id], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  orderId          String @unique
+  userEmail        String
+  phone            String
+  streetAddress    String
+  postalCode       String
+  city             String
+  country          String
+  deliveryLocation String
+  productCart      Json
+
+  user User @relation(fields: [id], references: [id], onDelete: Cascade)
+}
