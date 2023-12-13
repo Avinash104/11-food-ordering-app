@@ -65,14 +65,19 @@ model Category {
 }
 
 model MenuItem {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
   imageSrc    String
   basePrice   Int
-  sizes       String
+  sizes       Serving?
 
   category Category @relation(fields: [id], references: [id], onDelete: Cascade)
+}
+
+enum Serving {
+  HALF
+  FULL
 }
 
 model Order {

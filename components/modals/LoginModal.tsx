@@ -7,11 +7,11 @@ import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
-import { AiFillFacebook, AiFillGithub } from "react-icons/ai"
+import { AiFillFacebook } from "react-icons/ai"
 import { FcGoogle } from "react-icons/fc"
-import Button from "../Button"
 import Heading from "../Heading"
-import Input from "../inputs/Input"
+import Button from "../ui/ModalButton"
+import Input from "../ui/ModalInput"
 import Modal from "./Modal"
 
 const LoginModal = () => {
@@ -92,7 +92,7 @@ const LoginModal = () => {
       />
       <Button
         outline
-        label="Continue with GitHub"
+        label="Continue with Facebook"
         icon={AiFillFacebook}
         onClick={() => signIn("facebook")}
       />

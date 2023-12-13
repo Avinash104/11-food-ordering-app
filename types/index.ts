@@ -8,3 +8,18 @@ export type SafeUser = Omit<
   updatedAt: string
   emailVerified: string | null
 }
+
+export interface Product {
+  id: string
+  category: Category
+  name: string
+  price: string
+  isFeatured: boolean
+  size: number
+  imagesSrc: string
+}
+
+export interface Category {
+  id: string
+  name: string
+}

@@ -1,15 +1,18 @@
 "use client"
 
+import useCart from "@/hooks/useCart"
 import useLoginModal from "@/hooks/useLoginModal"
 import useRegisterModal from "@/hooks/useRegisterModal"
-import useSubModal from "@/hooks/useSubModal"
 import { SafeUser } from "@/types/index"
 import { signOut } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
-import { AiFillBell, AiOutlineMenu, AiOutlineUser } from "react-icons/ai"
+import { AiOutlineMenu, AiOutlineUser } from "react-icons/ai"
+import { HiShoppingCart } from "react-icons/hi"
 import Avatar from "../Avatar"
 import { ModeToggle } from "../ModeToggle"
-import MenuItem from "./MenuItem"
+import { Button } from "../ui/button"
+import MenuItem from "./UserMenuItem"
 
 interface NavbarProps {
   currentUser?: SafeUser | null
@@ -18,33 +21,30 @@ interface NavbarProps {
 const UserMenu: React.FC<NavbarProps> = ({ currentUser }) => {
   const registerModal = useRegisterModal()
   const loginModal = useLoginModal()
-  const subModal = useSubModal()
   const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
+  const cart = useCart()
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value)
   }, [])
 
-  const openSubscription = useCallback(() => {
-    if (!currentUser) return loginModal.onOpen()
-
-    subModal.onOpen()
-  }, [currentUser, loginModal, subModal])
-
   return (
     <div className="relative">
       <div className="flex items-center gap-3">
-        <div
-          onClick={openSubscription}
-          className="hidden md:block text-sm dark:bg-slate-500 dark:text-red-500 text-yellow-800 font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer"
-        >
-          Become a Pro Member
-        </div>
         <div className="h-8 flex items-center cursor-pointer">
           <ModeToggle />
         </div>
         <div>
-          <AiFillBell />
+          <Button
+            onClick={() => router.push("/cart")}
+            className="flex items-center rounded-full bg-black px-4 py-2 relative"
+          >
+            <HiShoppingCart size={20} color="white" />
+            <span className="ml-2 text-xs font-medium text-white absolute top-5 right-3 bg-orange-500 rounded-full px-0.5">
+              {cart.items.length}
+            </span>
+          </Button>
         </div>
         <div
           onClick={toggleOpen}
@@ -73,7 +73,6 @@ const UserMenu: React.FC<NavbarProps> = ({ currentUser }) => {
                 <MenuItem onClick={() => {}} label="My favorities" />
                 <MenuItem onClick={() => {}} label="My reservations" />
                 <MenuItem onClick={() => {}} label="My properties" />
-                {/* <MenuItem onClick={rentModal.onOpen} label="Airbnb my home" /> */}
                 <hr />
                 <MenuItem onClick={() => signOut()} label="Logout" />
               </>

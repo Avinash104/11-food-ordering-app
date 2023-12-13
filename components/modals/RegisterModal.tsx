@@ -9,9 +9,9 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import { AiFillFacebook } from "react-icons/ai"
 import { FcGoogle } from "react-icons/fc"
-import Button from "../Button"
 import Heading from "../Heading"
-import Input from "../inputs/Input"
+import Button from "../ui/ModalButton"
+import Input from "../ui/ModalInput"
 import Modal from "./Modal"
 
 const RegisterModal = () => {
@@ -37,6 +37,7 @@ const RegisterModal = () => {
     axios
       .post("/api/register", data)
       .then(() => registerModal.onClose())
+      .then(() => loginModal.onOpen())
       .catch((error) => toast.error("Something went wrong."))
       .finally(() => setIsLoading(false))
   }
