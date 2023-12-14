@@ -48,9 +48,9 @@ const UserMenu: React.FC<NavbarProps> = ({ currentUser }) => {
         </div>
         <div
           onClick={toggleOpen}
-          className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition"
+          className="p-4 md:py-1 md:px-2 md:border-3 border-slate-400 flex flex-row items-center gap-2 border-2 space-x-2 space-y-2 shadow-sm rounded-full cursor-pointer hover:shadow-lg transition"
         >
-          <AiOutlineMenu />
+          <AiOutlineMenu size={20} color="black" />
           <div className="hidden md:block">
             {currentUser?.image ? (
               <>
@@ -58,7 +58,7 @@ const UserMenu: React.FC<NavbarProps> = ({ currentUser }) => {
               </>
             ) : (
               <>
-                <AiOutlineUser />{" "}
+                <AiOutlineUser size={20} />{" "}
               </>
             )}
           </div>

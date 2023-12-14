@@ -14,7 +14,7 @@ interface NavProps {
 
 const Navbar: React.FC<NavProps> = ({ currentUser }) => {
   return (
-    <div className="fixed w-full shadow-sm bg-slate-400">
+    <div className="fixed w-full top-0 z-50 shadow-md bg-gray-200/90 dark:bg-slate-500">
       <div className="py-2 border-b-[1px]">
         <Container>
           <div className="flex items-center justify-around gap-3 md:gap-0 ">

@@ -11,15 +11,19 @@ export type SafeUser = Omit<
 
 export interface Product {
   id: string
-  category: Category
-  name: string
-  price: string
+  title: string
+  description: string
+  imageSrc: string
+  basePrice: number
   isFeatured: boolean
-  size: number
-  imagesSrc: string
+  size: string | null
+
+  // category: Category
 }
 
 export interface Category {
   id: string
-  name: string
+  title: string
+  description: string
+  imageSrc: string
 }

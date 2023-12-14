@@ -70,7 +70,8 @@ model MenuItem {
   description String
   imageSrc    String
   basePrice   Int
-  sizes       Serving?
+  isFeatured  Boolean
+  size        Serving?
 
   category Category @relation(fields: [id], references: [id], onDelete: Cascade)
 }
